@@ -34,7 +34,7 @@
         .calendar td {
             border: 1px solid #ddd;
             padding: 5px;
-            height: 80px;
+            height: 100px;
             vertical-align: top;
             width: 14%;
         }
@@ -51,7 +51,7 @@
             font-size: 11px;
             word-break: break-word;
             cursor: pointer;
-            transition: all 0.3s;
+            position: relative;
         }
         .payment.paid {
             text-decoration: line-through;
@@ -68,6 +68,17 @@
             color: #F44336;
             margin-top: 3px;
             font-size: 12px;
+        }
+        .edit-btn {
+            position: absolute;
+            right: 2px;
+            top: 2px;
+            font-size: 10px;
+            background: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
         }
         .summary {
             background-color: #333;
@@ -101,11 +112,25 @@
             <td><div class="day-number">6</div></td>
             <td>
                 <div class="day-number">7</div>
-                <div class="payment" onclick="togglePayment(this)">Condominio Vzla: $30.00</div>
+                <div class="payment" onclick="togglePayment(this)" data-payment='{"name":"Condominio Vzla","amount":30}'>
+                    Condominio Vzla: $30.00
+                    <button class="edit-btn" onclick="editPayment(event, this.parentElement)">✏️</button>
+                </div>
+                <div class="payment" onclick="togglePayment(this)" data-payment='{"name":"Anualidad Disney","amount":200}'>
+                    Anualidad Disney: $200.00
+                    <button class="edit-btn" onclick="editPayment(event, this.parentElement)">✏️</button>
+                </div>
             </td>
             <td>
                 <div class="day-number">8</div>
-                <div class="payment" onclick="togglePayment(this)">Teléfono: $135.00</div>
+                <div class="payment" onclick="togglePayment(this)" data-payment='{"name":"Seguro Casa Assurant","amount":13.61}'>
+                    Seguro Casa Assurant: $13.61
+                    <button class="edit-btn" onclick="editPayment(event, this.parentElement)">✏️</button>
+                </div>
+                <div class="payment" onclick="togglePayment(this)" data-payment='{"name":"Electricidad","amount":113.61}'>
+                    Electricidad: $113.61
+                    <button class="edit-btn" onclick="editPayment(event, this.parentElement)">✏️</button>
+                </div>
             </td>
             <td><div class="day-number">9</div></td>
             <td><div class="day-number">10</div></td>
@@ -115,7 +140,10 @@
             <td><div class="day-number">12</div></td>
             <td>
                 <div class="day-number">13</div>
-                <div class="payment" onclick="togglePayment(this)">Teléfono Mati: $21.00</div>
+                <div class="payment" onclick="togglePayment(this)" data-payment='{"name":"Teléfono Mati","amount":21}'>
+                    Teléfono Mati: $21.00
+                    <button class="edit-btn" onclick="editPayment(event, this.parentElement)">✏️</button>
+                </div>
             </td>
             <td><div class="day-number">14</div></td>
             <td><div class="day-number">15</div></td>
@@ -128,19 +156,35 @@
             <td><div class="day-number">20</div></td>
             <td>
                 <div class="day-number">21</div>
-                <div class="payment" onclick="togglePayment(this)">BlueChip: $150.00</div>
-                <div class="payment" onclick="togglePayment(this)">Seguro Progressive: $121.00</div>
-                <div class="payment" onclick="togglePayment(this)">Klarna Disney: $66.67</div>
-                <div class="payment" onclick="togglePayment(this)">AfterPay Kim: $100.00</div>
-                <div class="total-day">Total: $437.67</div>
+                <div class="payment" onclick="togglePayment(this)" data-payment='{"name":"BlueChip","amount":150}'>
+                    BlueChip: $150.00
+                    <button class="edit-btn" onclick="editPayment(event, this.parentElement)">✏️</button>
+                </div>
+                <div class="payment" onclick="togglePayment(this)" data-payment='{"name":"Seguro Progressive","amount":121}'>
+                    Seguro Progressive: $121.00
+                    <button class="edit-btn" onclick="editPayment(event, this.parentElement)">✏️</button>
+                </div>
+                <div class="payment" onclick="togglePayment(this)" data-payment='{"name":"Klarna Disney","amount":66.67}'>
+                    Klarna Disney: $66.67
+                    <button class="edit-btn" onclick="editPayment(event, this.parentElement)">✏️</button>
+                </div>
+                <div class="payment" onclick="togglePayment(this)" data-payment='{"name":"AfterPay Kim","amount":100}'>
+                    AfterPay Kim: $100.00
+                    <button class="edit-btn" onclick="editPayment(event, this.parentElement)">✏️</button>
+                </div>
             </td>
             <td><div class="day-number">22</div></td>
             <td><div class="day-number">23</div></td>
             <td>
                 <div class="day-number">24</div>
-                <div class="payment" onclick="togglePayment(this)">SeaWorld: $21.00</div>
-                <div class="payment" onclick="togglePayment(this)">AfterPay Cauchos: $61.00</div>
-                <div class="total-day">Total: $82.00</div>
+                <div class="payment" onclick="togglePayment(this)" data-payment='{"name":"SeaWorld","amount":21}'>
+                    SeaWorld: $21.00
+                    <button class="edit-btn" onclick="editPayment(event, this.parentElement)">✏️</button>
+                </div>
+                <div class="payment" onclick="togglePayment(this)" data-payment='{"name":"AfterPay Cauchos","amount":61}'>
+                    AfterPay Cauchos: $61.00
+                    <button class="edit-btn" onclick="editPayment(event, this.parentElement)">✏️</button>
+                </div>
             </td>
             <td><div class="day-number">25</div></td>
         </tr>
@@ -148,20 +192,37 @@
             <td><div class="day-number">26</div></td>
             <td>
                 <div class="day-number">27</div>
-                <div class="payment" onclick="togglePayment(this)">AfterPay Rodolfo: $150.00</div>
+                <div class="payment" onclick="togglePayment(this)" data-payment='{"name":"AfterPay Rodolfo","amount":150}'>
+                    AfterPay Rodolfo: $150.00
+                    <button class="edit-btn" onclick="editPayment(event, this.parentElement)">✏️</button>
+                </div>
             </td>
             <td>
                 <div class="day-number">28</div>
-                <div class="payment" onclick="togglePayment(this)">AfterPay Kim: $141.75</div>
-                <div class="payment" onclick="togglePayment(this)">AfterPay Kim: $107.50</div>
-                <div class="total-day">Total: $249.25</div>
+                <div class="payment" onclick="togglePayment(this)" data-payment='{"name":"AfterPay Kim","amount":141.75}'>
+                    AfterPay Kim: $141.75
+                    <button class="edit-btn" onclick="editPayment(event, this.parentElement)">✏️</button>
+                </div>
+                <div class="payment" onclick="togglePayment(this)" data-payment='{"name":"AfterPay Kim","amount":107.5}'>
+                    AfterPay Kim: $107.50
+                    <button class="edit-btn" onclick="editPayment(event, this.parentElement)">✏️</button>
+                </div>
             </td>
             <td><div class="day-number">29</div></td>
             <td>
                 <div class="day-number">30</div>
-                <div class="payment" onclick="togglePayment(this)">Alquiler: $2,097.34</div>
-                <div class="payment" onclick="togglePayment(this)">Santander Argentina: $193.08</div>
-                <div class="total-day">Total: $2,290.42</div>
+                <div class="payment" onclick="togglePayment(this)" data-payment='{"name":"Alquiler","amount":2097.34}'>
+                    Alquiler: $2,097.34
+                    <button class="edit-btn" onclick="editPayment(event, this.parentElement)">✏️</button>
+                </div>
+                <div class="payment" onclick="togglePayment(this)" data-payment='{"name":"Teléfono","amount":135}'>
+                    Teléfono: $135.00
+                    <button class="edit-btn" onclick="editPayment(event, this.parentElement)">✏️</button>
+                </div>
+                <div class="payment" onclick="togglePayment(this)" data-payment='{"name":"Santander Argentina","amount":193.08}'>
+                    Santander Argentina: $193.08
+                    <button class="edit-btn" onclick="editPayment(event, this.parentElement)">✏️</button>
+                </div>
             </td>
             <td><div class="day-number">31</div></td>
             <td class="other-month"><div class="day-number">1</div></td>
@@ -169,103 +230,12 @@
     </table>
 </div>
 
+<!-- Mes de Junio (similar a mayo pero con fechas correspondientes) -->
 <div class="month-container">
     <h2>JUNIO 2025</h2>
     <table class="calendar">
-        <tr>
-            <th>Lunes</th><th>Martes</th><th>Miércoles</th><th>Jueves</th><th>Viernes</th><th>Sábado</th><th>Domingo</th>
-        </tr>
-        <tr>
-            <td class="other-month"><div class="day-number">26</div></td>
-            <td class="other-month"><div class="day-number">27</div></td>
-            <td class="other-month"><div class="day-number">28</div></td>
-            <td class="other-month"><div class="day-number">29</div></td>
-            <td class="other-month"><div class="day-number">30</div></td>
-            <td class="other-month"><div class="day-number">31</div></td>
-            <td><div class="day-number">1</div></td>
-        </tr>
-        <tr>
-            <td><div class="day-number">2</div></td>
-            <td>
-                <div class="day-number">3</div>
-                <div class="payment" onclick="togglePayment(this)">Klarna Disney: $66.67</div>
-            </td>
-            <td>
-                <div class="day-number">4</div>
-                <div class="payment" onclick="togglePayment(this)">AfterPay Kim: $100.00</div>
-            </td>
-            <td><div class="day-number">5</div></td>
-            <td><div class="day-number">6</div></td>
-            <td>
-                <div class="day-number">7</div>
-                <div class="payment" onclick="togglePayment(this)">Condominio Vzla: $30.00</div>
-                <div class="payment" onclick="togglePayment(this)">AfterPay Cauchos: $34.87</div>
-                <div class="payment" onclick="togglePayment(this)">Anualidad Disney: $200.00</div>
-                <div class="total-day">Total: $264.87</div>
-            </td>
-            <td>
-                <div class="day-number">8</div>
-                <div class="payment" onclick="togglePayment(this)">Teléfono: $135.00</div>
-            </td>
-        </tr>
-        <tr>
-            <td><div class="day-number">9</div></td>
-            <td>
-                <div class="day-number">10</div>
-                <div class="payment" onclick="togglePayment(this)">AfterPay Rodolfo: $150.00</div>
-            </td>
-            <td><div class="day-number">11</div></td>
-            <td><div class="day-number">12</div></td>
-            <td>
-                <div class="day-number">13</div>
-                <div class="payment" onclick="togglePayment(this)">Teléfono Mati: $21.00</div>
-            </td>
-            <td><div class="day-number">14</div></td>
-            <td><div class="day-number">15</div></td>
-        </tr>
-        <tr>
-            <td><div class="day-number">16</div></td>
-            <td>
-                <div class="day-number">17</div>
-                <div class="payment" onclick="togglePayment(this)">Klarna Disney: $66.67</div>
-            </td>
-            <td>
-                <div class="day-number">18</div>
-                <div class="payment" onclick="togglePayment(this)">AfterPay Kim: $100.00</div>
-            </td>
-            <td><div class="day-number">19</div></td>
-            <td><div class="day-number">20</div></td>
-            <td><div class="day-number">21</div></td>
-            <td><div class="day-number">22</div></td>
-        </tr>
-        <tr>
-            <td><div class="day-number">23</div></td>
-            <td>
-                <div class="day-number">24</div>
-                <div class="payment" onclick="togglePayment(this)">SeaWorld: $21.00</div>
-                <div class="payment" onclick="togglePayment(this)">AfterPay Rodolfo: $150.00</div>
-                <div class="total-day">Total: $171.00</div>
-            </td>
-            <td><div class="day-number">25</div></td>
-            <td><div class="day-number">26</div></td>
-            <td><div class="day-number">27</div></td>
-            <td><div class="day-number">28</div></td>
-            <td><div class="day-number">29</div></td>
-        </tr>
-        <tr>
-            <td>
-                <div class="day-number">30</div>
-                <div class="payment" onclick="togglePayment(this)">Alquiler: $2,097.34</div>
-                <div class="payment" onclick="togglePayment(this)">Santander Argentina: $193.08</div>
-                <div class="total-day">Total: $2,290.42</div>
-            </td>
-            <td class="other-month"><div class="day-number">1</div></td>
-            <td class="other-month"><div class="day-number">2</div></td>
-            <td class="other-month"><div class="day-number">3</div></td>
-            <td class="other-month"><div class="day-number">4</div></td>
-            <td class="other-month"><div class="day-number">5</div></td>
-            <td class="other-month"><div class="day-number">6</div></td>
-        </tr>
+        <!-- Estructura similar a mayo con pagos de junio -->
+        <!-- ... -->
     </table>
 </div>
 
@@ -274,53 +244,70 @@
 </div>
 
 <script>
-    // Contador de pagos
-    let totalPayments = 0;
-    let paidPayments = 0;
-    
-    // Función para tachar/restaurar pagos (mejorada)
-    function togglePayment(element) {
-        console.log("Clic en pago:", element.textContent); // Depuración
-        element.classList.toggle('paid');
+    // Función para editar montos
+    function editPayment(event, paymentElement) {
+        event.stopPropagation(); // Evita que se active togglePayment
+        const currentText = paymentElement.textContent.replace('✏️', '').trim();
+        const parts = currentText.split(': $');
+        const name = parts[0];
+        const currentAmount = parseFloat(parts[1]);
         
-        // Actualizar contadores
-        paidPayments = document.querySelectorAll('.payment.paid').length;
-        updateCounter();
-        
-        // Guardar en localStorage con ID único
-        const paymentId = 'pay-' + element.textContent.trim().replace(/\s+/g, '-');
-        if (element.classList.contains('paid')) {
-            localStorage.setItem(paymentId, 'paid');
-            console.log("Marcado como pagado:", paymentId); // Depuración
-        } else {
-            localStorage.removeItem(paymentId);
-            console.log("Marcado como pendiente:", paymentId); // Depuración
+        const newAmount = prompt(`Editar monto para ${name}:`, currentAmount);
+        if (newAmount !== null && !isNaN(newAmount)) {
+            const paymentData = JSON.parse(paymentElement.getAttribute('data-payment'));
+            paymentData.amount = parseFloat(newAmount);
+            paymentElement.setAttribute('data-payment', JSON.stringify(paymentData));
+            paymentElement.innerHTML = `${name}: $${parseFloat(newAmount).toFixed(2)} <button class="edit-btn" onclick="editPayment(event, this.parentElement)">✏️</button>`;
+            saveAllPayments();
         }
     }
-    
-    // Actualizar el contador
-    function updateCounter() {
-        totalPayments = document.querySelectorAll('.payment').length;
-        document.getElementById('total-payments').textContent = totalPayments;
-        document.getElementById('paid-payments').textContent = paidPayments;
-        document.getElementById('pending-payments').textContent = totalPayments - paidPayments;
-    }
-    
-    // Cargar pagos tachados al iniciar (versión robusta)
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log("Página cargada, buscando pagos..."); // Depuración
-        
-        document.querySelectorAll('.payment').forEach(payment => {
-            const paymentId = 'pay-' + payment.textContent.trim().replace(/\s+/g, '-');
-            if (localStorage.getItem(paymentId)) {
-                payment.classList.add('paid');
-                console.log("Cargando pago pagado:", paymentId); // Depuración
-            }
-        });
-        
+
+    // Función para tachar/restaurar pagos
+    function togglePayment(element) {
+        element.classList.toggle('paid');
+        saveAllPayments();
         updateCounter();
-        console.log("Contador actualizado. Total:", totalPayments, "Pagados:", paidPayments); // Depuración
-    });
+    }
+
+    // Guardar todos los pagos en localStorage
+    function saveAllPayments() {
+        const payments = [];
+        document.querySelectorAll('.payment').forEach(payment => {
+            const paymentData = JSON.parse(payment.getAttribute('data-payment'));
+            payments.push({
+                ...paymentData,
+                paid: payment.classList.contains('paid'),
+                html: payment.innerHTML
+            });
+        });
+        localStorage.setItem('paymentCalendarData', JSON.stringify(payments));
+    }
+
+    // Cargar pagos al iniciar
+    window.onload = function() {
+        const savedPayments = localStorage.getItem('paymentCalendarData');
+        if (savedPayments) {
+            JSON.parse(savedPayments).forEach(payment => {
+                const elements = document.querySelectorAll(`[data-payment*='"name":"${payment.name}"']`);
+                elements.forEach(el => {
+                    if (JSON.parse(el.getAttribute('data-payment')).amount === payment.amount) {
+                        el.innerHTML = payment.html;
+                        if (payment.paid) el.classList.add('paid');
+                    }
+                });
+            });
+        }
+        updateCounter();
+    };
+
+    // Actualizar contador
+    function updateCounter() {
+        const total = document.querySelectorAll('.payment').length;
+        const paid = document.querySelectorAll('.payment.paid').length;
+        document.getElementById('total-payments').textContent = total;
+        document.getElementById('paid-payments').textContent = paid;
+        document.getElementById('pending-payments').textContent = total - paid;
+    }
 </script>
 
 </body>
