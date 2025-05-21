@@ -34,7 +34,7 @@
         .calendar td {
             border: 1px solid #ddd;
             padding: 5px;
-            height: 100px;
+            height: 120px;
             vertical-align: top;
             width: 14%;
         }
@@ -174,8 +174,20 @@
                     <button class="edit-btn" onclick="editPayment(event, this.parentElement)">✏️</button>
                 </div>
             </td>
-            <td><div class="day-number">22</div></td>
-            <td><div class="day-number">23</div></td>
+            <td>
+                <div class="day-number">22</div>
+                <div class="payment" onclick="togglePayment(this)" data-payment='{"name":"Tickets Orlando Memorial Day","amount":100}'>
+                    Tickets Orlando: $100.00
+                    <button class="edit-btn" onclick="editPayment(event, this.parentElement)">✏️</button>
+                </div>
+            </td>
+            <td>
+                <div class="day-number">23</div>
+                <div class="payment" onclick="togglePayment(this)" data-payment='{"name":"Torneo Orlando Memorial Day","amount":185}'>
+                    Torneo Orlando: $185.00
+                    <button class="edit-btn" onclick="editPayment(event, this.parentElement)">✏️</button>
+                </div>
+            </td>
             <td>
                 <div class="day-number">24</div>
                 <div class="payment" onclick="togglePayment(this)" data-payment='{"name":"SeaWorld","amount":21}'>
